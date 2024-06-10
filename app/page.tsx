@@ -4,12 +4,17 @@ import { UAParser } from 'ua-parser-js';
 import DeviceDetector from 'device-detector-js';
 
 // Define the type for uaInfo state
+interface DeviceInfo {
+  type: string;
+  brand: string;
+  model: string;
+}
 interface UAInfo {
   browser: UAParser.IBrowser;
   cpu: UAParser.ICPU;
-  device: any; // Update the type for device
+  device: DeviceInfo;
   engine: UAParser.IEngine;
-  os: UAParser.IOS;
+  os: UAParser.IOS & { platform: string }; // Extend the type to include platform
   ua: string;
 }
 
@@ -22,20 +27,36 @@ const InfoDevice = () => {
 
     // Parse the user agent string
     const userAgent = navigator.userAgent;
-    
-    const uaData = {
+
+    const parsedDevice = deviceDetector.parse(userAgent);
+    const device: DeviceInfo = {
+      type: parsedDevice.device?.type || 'unknown',
+      brand: parsedDevice.device?.brand || 'unknown',
+      model: parsedDevice.device?.model || 'unknown',
+    };
+
+    const osInfo = parser.getOS();
+
+    // Determine platform
+    let platform = 'unknown';
+    if (userAgent.includes('Win64')) {
+      platform = 'x64';
+    } else if (userAgent.includes('Macintosh') && userAgent.includes('Intel')) {
+      platform = 'Intel Mac OS X';
+    } else if (userAgent.includes('Macintosh') && (userAgent.includes('ARM') || userAgent.includes('AppleWebKit'))) {
+      platform = 'ARM Mac OS X';
+    }
+
+    const uaData: UAInfo = {
       browser: parser.getBrowser(),
       cpu: parser.getCPU(),
-      device: deviceDetector.parse(userAgent), // Get device info using device-detector-js
+      device: device,
       engine: parser.getEngine(),
-      os: parser.getOS(),
+      os: { ...osInfo, platform },
       ua: parser.getUA(),
     };
 
-    // Debugging log
-    console.log('User Agent Data:', uaData);
-
-    setUaInfo(uaData as any);
+    setUaInfo(uaData);
   }, []);
 
   if (!uaInfo) return <div>Loading...</div>;
