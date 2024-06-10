@@ -54,6 +54,7 @@ const InfoDevice = () => {
       ua: parser.getUA(),
     };
     const parseruA = new UAParser(uaData.ua);
+    console.log(uaData.ua)
     const test= parseruA.getDevice()
     setuaParser(test)
     setUaInfo(uaData);
@@ -65,6 +66,7 @@ const InfoDevice = () => {
     <div>
         <div>Test</div>
         <h1>{uaParser?.type} {uaParser?.vendor} {uaParser?.model}</h1>
+        <p>{uaInfo.ua}</p>
       {/* <h1>User Agent Information</h1>
       <div>
         <h2>Browser</h2>
