@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { UAParser } from 'ua-parser-js';
-import DeviceDetector from 'device-detector-js';
+import { useEffect, useState } from "react";
+import { UAParser } from "ua-parser-js";
+import DeviceDetector from "device-detector-js";
 
 const appleDeviceLookup = {
   // iPhone
@@ -65,62 +65,64 @@ const appleDeviceLookup = {
   "iPad7,12": "iPad (7th generation)",
   "iPad11,6": "iPad (8th generation)",
   "iPad11,7": "iPad (8th generation)",
-   // iPad
-   "iPad2,5": "iPad mini",
-   "iPad2,6": "iPad mini",
-   "iPad2,7": "iPad mini",
-   "iPad4,4": "iPad mini 2",
-   "iPad4,5": "iPad mini 2",
-   "iPad4,6": "iPad mini 2",
-   "iPad4,7": "iPad mini 3",
-   "iPad4,8": "iPad mini 3",
-   "iPad4,9": "iPad mini 3",
-   "iPad5,1": "iPad mini 4",
-   "iPad5,2": "iPad mini 4",
-   "iPad5.6": "iPad mini 5",
-   "iPad5.5": "iPad mini 6",
-   "iPad11,1": "iPad mini (5th generation)",
-   "iPad11,2": "iPad mini (5th generation)",
-   // iPad Pro
-   "iPad6,3": "iPad Pro (9.7-inch)",
-   "iPad6,4": "iPad Pro (9.7-inch)",
-   "iPad6,7": "iPad Pro (12.9-inch)",
-   "iPad6,8": "iPad Pro (12.9-inch)",
-   "iPad7,1": "iPad Pro (12.9-inch, 2nd generation)",
-   "iPad7,2": "iPad Pro (12.9-inch, 2nd generation)",
-   "iPad7,3": "iPad Pro (10.5-inch)",
-   "iPad7,4": "iPad Pro (10.5-inch)",
-   "iPad8,1": "iPad Pro (11-inch)",
-   "iPad8,2": "iPad Pro (11-inch)",
-   "iPad8,3": "iPad Pro (11-inch)",
-   "iPad8,4": "iPad Pro (11-inch)",
-   "iPad8,5": "iPad Pro (12.9-inch, 3rd generation)",
-   "iPad8,6": "iPad Pro (12.9-inch, 3rd generation)",
-   "iPad8,7": "iPad Pro (12.9-inch, 3rd generation)",
-   "iPad8,8": "iPad Pro (12.9-inch, 3rd generation)",
-   "iPad8,9": "iPad Pro (11-inch, 2nd generation)",
-   "iPad8,10": "iPad Pro (11-inch, 2nd generation)",
-   "iPad8,11": "iPad Pro (12.9-inch, 4th generation)",
-   "iPad8,12": "iPad Pro (12.9-inch, 4th generation)",
-   "iPad13,4": "iPad Pro (11-inch, 3rd generation)",
-   "iPad13,5": "iPad Pro (11-inch, 3rd generation)",
-   "iPad13,6": "iPad Pro (11-inch, 3rd generation)",
-   "iPad13,7": "iPad Pro (11-inch, 3rd generation)",
-   "iPad13,8": "iPad Pro (12.9-inch, 5th generation)",
-   "iPad13,9": "iPad Pro (12.9-inch, 5th generation)",
-   "iPad13,10": "iPad Pro (12.9-inch, 5th generation)",
-   "iPad13,11": "iPad Pro (12.9-inch, 5th generation)",
-   // iPad Air
-   "iPad4,1": "iPad Air",
-   "iPad4,2": "iPad Air",
-   "iPad4,3": "iPad Air",
-   "iPad5,3": "iPad Air 2",
-   "iPad5,4": "iPad Air 2",
-   "iPad11,3": "iPad Air (3rd generation)",
-   "iPad11,4": "iPad Air (3rd generation)",
-   "iPad13,1": "iPad Air (4th generation)",
-   "iPad13,2": "iPad Air (4th generation)",
-    // Mac
+  // iPad
+  "iPad2,5": "iPad mini",
+  "iPad2,6": "iPad mini",
+  "iPad2,7": "iPad mini",
+  "iPad4,4": "iPad mini 2",
+  "iPad4,5": "iPad mini 2",
+  "iPad4,6": "iPad mini 2",
+  "iPad4,7": "iPad mini 3",
+  "iPad4,8": "iPad mini 3",
+  "iPad4,9": "iPad mini 3",
+  "iPad5,1": "iPad mini 4",
+  "iPad5,2": "iPad mini 4",
+  // iPad mini 5
+  "iPad11,1": "iPad mini (5th generation)",
+  "iPad11,2": "iPad mini (5th generation)",
+  // iPad mini 6
+  "iPad14,1": "iPad mini (6th generation)",
+  "iPad14,2": "iPad mini (6th generation)",
+  // iPad Pro
+  "iPad6,3": "iPad Pro (9.7-inch)",
+  "iPad6,4": "iPad Pro (9.7-inch)",
+  "iPad6,7": "iPad Pro (12.9-inch)",
+  "iPad6,8": "iPad Pro (12.9-inch)",
+  "iPad7,1": "iPad Pro (12.9-inch, 2nd generation)",
+  "iPad7,2": "iPad Pro (12.9-inch, 2nd generation)",
+  "iPad7,3": "iPad Pro (10.5-inch)",
+  "iPad7,4": "iPad Pro (10.5-inch)",
+  "iPad8,1": "iPad Pro (11-inch)",
+  "iPad8,2": "iPad Pro (11-inch)",
+  "iPad8,3": "iPad Pro (11-inch)",
+  "iPad8,4": "iPad Pro (11-inch)",
+  "iPad8,5": "iPad Pro (12.9-inch, 3rd generation)",
+  "iPad8,6": "iPad Pro (12.9-inch, 3rd generation)",
+  "iPad8,7": "iPad Pro (12.9-inch, 3rd generation)",
+  "iPad8,8": "iPad Pro (12.9-inch, 3rd generation)",
+  "iPad8,9": "iPad Pro (11-inch, 2nd generation)",
+  "iPad8,10": "iPad Pro (11-inch, 2nd generation)",
+  "iPad8,11": "iPad Pro (12.9-inch, 4th generation)",
+  "iPad8,12": "iPad Pro (12.9-inch, 4th generation)",
+  "iPad13,4": "iPad Pro (11-inch, 3rd generation)",
+  "iPad13,5": "iPad Pro (11-inch, 3rd generation)",
+  "iPad13,6": "iPad Pro (11-inch, 3rd generation)",
+  "iPad13,7": "iPad Pro (11-inch, 3rd generation)",
+  "iPad13,8": "iPad Pro (12.9-inch, 5th generation)",
+  "iPad13,9": "iPad Pro (12.9-inch, 5th generation)",
+  "iPad13,10": "iPad Pro (12.9-inch, 5th generation)",
+  "iPad13,11": "iPad Pro (12.9-inch, 5th generation)",
+  // iPad Air
+  "iPad4,1": "iPad Air",
+  "iPad4,2": "iPad Air",
+  "iPad4,3": "iPad Air",
+  "iPad5,3": "iPad Air 2",
+  "iPad5,4": "iPad Air 2",
+  "iPad11,3": "iPad Air (3rd generation)",
+  "iPad11,4": "iPad Air (3rd generation)",
+  "iPad13,1": "iPad Air (4th generation)",
+  "iPad13,2": "iPad Air (4th generation)",
+  // Mac
   "MacBook10,1": "MacBook (12-inch, Early 2015)",
   "MacBookAir8,1": "MacBook Air (Retina, 13-inch, 2018)",
   "MacBookAir8,2": "MacBook Air (Retina, 13-inch, 2018)",
@@ -147,7 +149,7 @@ const appleDeviceLookup = {
   "MacBookPro17,5": "MacBook Pro (14-inch, 2021, M1 Max)",
   "MacBookPro17,6": "MacBook Pro (16-inch, 2021, M1 Pro)",
   "MacBookPro17,7": "MacBook Pro (16-inch, 2021, M1 Max)",
-   // MacBook Pro M2
+  // MacBook Pro M2
   "MacBookPro18,1": "MacBook Pro (13-inch, 2023, M2)",
   "MacBookPro18,2": "MacBook Pro (13-inch, 2023, M2)",
   "MacBookPro18,3": "MacBook Pro (14-inch, 2023, M2)",
@@ -165,7 +167,7 @@ const appleDeviceLookup = {
   "MacBookAir10,1": "MacBook Air (Retina, 13-inch, 2022, M2)",
   "MacBookAir10,2": "MacBook Air (Retina, 13-inch, 2022, M2)",
   "MacBookAir10,3": "MacBook Air (Retina, 13-inch, 2022, M3)",
-  "MacBookAir10,4": "MacBook Air (Retina, 13-inch, 2022, M3)"
+  "MacBookAir10,4": "MacBook Air (Retina, 13-inch, 2022, M3)",
 };
 
 interface DeviceInfo {
@@ -194,31 +196,38 @@ const InfoDevice = () => {
     const userAgent = navigator.userAgent;
     const parsedDevice = deviceDetector.parse(userAgent);
 
-    let fullModel = parsedDevice.device?.model || 'unknown';
+    let fullModel = parsedDevice.device?.model || "unknown";
 
-    if (parsedDevice.device?.brand === 'Apple') {
-      const modelCode = parsedDevice.device?.model as keyof typeof appleDeviceLookup;
-      fullModel = appleDeviceLookup[modelCode] || modelCode || 'unknown Apple device';
+    if (parsedDevice.device?.brand === "Apple") {
+      const modelCode = parsedDevice.device
+        ?.model as keyof typeof appleDeviceLookup;
+      fullModel =
+        appleDeviceLookup[modelCode] || modelCode || "unknown Apple device";
     } else {
-      fullModel = `${parsedDevice.device?.brand} ${parsedDevice.device?.model}` || 'unknown device';
+      fullModel =
+        `${parsedDevice.device?.brand} ${parsedDevice.device?.model}` ||
+        "unknown device";
     }
 
     const device: DeviceInfo = {
-      type: parsedDevice.device?.type || 'unknown',
-      brand: parsedDevice.device?.brand || 'unknown',
-      model: parsedDevice.device?.model || 'unknown',
+      type: parsedDevice.device?.type || "unknown",
+      brand: parsedDevice.device?.brand || "unknown",
+      model: parsedDevice.device?.model || "unknown",
       fullModel: fullModel,
     };
 
     const osInfo = parser.getOS();
 
-    let platform = 'unknown';
-    if (userAgent.includes('Win64')) {
-      platform = 'x64';
-    } else if (userAgent.includes('Macintosh') && userAgent.includes('Intel')) {
-      platform = 'Intel Mac OS X';
-    } else if (userAgent.includes('Macintosh') && (userAgent.includes('ARM') || userAgent.includes('AppleWebKit'))) {
-      platform = 'ARM Mac OS X';
+    let platform = "unknown";
+    if (userAgent.includes("Win64")) {
+      platform = "x64";
+    } else if (userAgent.includes("Macintosh") && userAgent.includes("Intel")) {
+      platform = "Intel Mac OS X";
+    } else if (
+      userAgent.includes("Macintosh") &&
+      (userAgent.includes("ARM") || userAgent.includes("AppleWebKit"))
+    ) {
+      platform = "ARM Mac OS X";
     }
 
     const uaData: UAInfo = {
